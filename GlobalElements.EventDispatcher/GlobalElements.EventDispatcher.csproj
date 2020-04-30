@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>8</LangVersion>
+        <RootNamespace>GlobalElements.EventDispatcherLib</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="log4net" Version="2.0.8" />
+      <PackageReference Include="structuremap" Version="4.7.1" />
+    </ItemGroup>
+
+</Project>

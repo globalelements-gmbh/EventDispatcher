@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalElements.EventDispatcher", "GlobalElements.EventDispatcher\GlobalElements.EventDispatcher.csproj", "{EBD290FE-E686-4271-B945-498B3CA2A7CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalElements.EventDispatcher.Test", "GlobalElements.EventDispatcher.Test\GlobalElements.EventDispatcher.Test.csproj", "{F9A25CA0-14E8-42B7-95CC-EEC2ACA7FD33}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EBD290FE-E686-4271-B945-498B3CA2A7CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBD290FE-E686-4271-B945-498B3CA2A7CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBD290FE-E686-4271-B945-498B3CA2A7CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBD290FE-E686-4271-B945-498B3CA2A7CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9A25CA0-14E8-42B7-95CC-EEC2ACA7FD33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9A25CA0-14E8-42B7-95CC-EEC2ACA7FD33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9A25CA0-14E8-42B7-95CC-EEC2ACA7FD33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal
