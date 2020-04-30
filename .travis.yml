@@ -4,10 +4,25 @@ dotnet: 3.0
 
 solution: EventDispatcher.sln
 
-script:
-  - dotnet restore
-  - dotnet build
-  - dotnet test ./*Test*/.*.csproj
+jobs: 
+  include:
+    - stage: compile
+      script:
+        - dotnet restore
+        - dotnet build
+    - stage: test
+      script:
+        - dotnet test ./*Test*/*.csproj
+    - stage: deploy
+      script:
+        - dotnet pack -c Release -p:EventDispatcher.nuspec
+        - dotnet nuget push bin\Release\*.nupkg
+          
+stages:
+  - compile
+  - test
+  - name: deploy
+    if: branch = master
 
 global:
   - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
