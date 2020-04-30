@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GlobalElements.EventDispatcherLib.Exception;
@@ -12,7 +13,6 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
         private static readonly ILog Logger = LogManager.GetLogger(typeof(EventDispatcher));
         private readonly List<IEventListener> _listeners = new List<IEventListener>();
         private readonly IContainer _container;
-
 
         public EventDispatcher(IContainer container)
         {
@@ -39,6 +39,26 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
         public void AddListener(string eventName, IEventListener listener)
         {
             _listeners.Add(listener);
+        }
+
+        public void WhatDoIHave(Action<string> output)
+        {
+            _listeners.ForEach(x =>
+            {
+                foreach (var e in x.GetSubscribedEvents())
+                {
+                    output($"{x.GetType()} will subscribe to <{e.Key}> with priority <{e.Value}>");
+                }
+            });
+        }
+
+        public IEnumerable<string> WhatDoIHave()
+        {
+            var list = new List<string>();
+            var f = new Action<string>((x) => list.Add(x));
+            WhatDoIHave(f);
+
+            return list;
         }
 
         public T Dispatch<T>(T theEvent) where T : IEvent

@@ -13,7 +13,6 @@ using StructureMap;
 
 namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
 {
-    [TestFixture]
     public class EventDispatcherTest
     {
         [Test]
@@ -142,6 +141,120 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
             // Then
             subscriberA.Verify(x => x.OnEvent(It.IsAny<DummyEvent>()), Times.Never);
             subscriberB.Verify(x => x.OnEvent(It.IsAny<DummyEvent>()), Times.Once);
+        }
+
+        [Test]
+        public void WhatDoIHave_DebugOutput_WillReturnProperOutput()
+        {
+            var subscriberA = new Mock<IEventSubscriber>();
+            subscriberA.Setup(x => x.GetSubscribedEvents())
+                .Returns(new Dictionary<string, short>()
+                {
+                    {"dummy", 0}
+                });
+
+            var subscribers = new List<IEventSubscriber>()
+            {
+                subscriberA.Object,
+            };
+
+            var container = new Mock<IContainer>();
+            container.Setup(x => x.GetAllInstances<IEventSubscriber>())
+                .Returns(subscribers);
+
+            var dispatcher = new EventDispatcher(container.Object);
+            dispatcher.Scan();
+
+            // When
+            var output = dispatcher.WhatDoIHave();
+
+            // Then
+            Assert.AreEqual(1, output.Count());
+            Assert.AreEqual(
+                "Castle.Proxies.IEventSubscriberProxy will subscribe to <dummy> with priority <0>",
+                output.ElementAt(0));
+        }
+
+        [Test]
+        public void WhatDoIHave_DebugOutput_MultipleEvents_WillReturnProperOutput()
+        {
+            var subscriberA = new Mock<IEventSubscriber>();
+            subscriberA.Setup(x => x.GetSubscribedEvents())
+                .Returns(new Dictionary<string, short>()
+                {
+                    {"dummy", 0},
+                    {"anotherdummy", -5}
+                });
+
+            var subscribers = new List<IEventSubscriber>()
+            {
+                subscriberA.Object,
+            };
+
+            var container = new Mock<IContainer>();
+            container.Setup(x => x.GetAllInstances<IEventSubscriber>())
+                .Returns(subscribers);
+
+            var dispatcher = new EventDispatcher(container.Object);
+            dispatcher.Scan();
+
+            // When
+            var output = dispatcher.WhatDoIHave();
+
+            // Then
+            Assert.AreEqual(2, output.Count());
+            Assert.AreEqual(
+                "Castle.Proxies.IEventSubscriberProxy will subscribe to <dummy> with priority <0>",
+                output.ElementAt(0));
+            Assert.AreEqual(
+                "Castle.Proxies.IEventSubscriberProxy will subscribe to <anotherdummy> with priority <-5>",
+                output.ElementAt(1));
+        }
+
+        [Test]
+        public void WhatDoIHave_DebugOutput_MultipleEventsAndSubscriber_WillReturnProperOutput()
+        {
+            var subscriberA = new Mock<IEventSubscriber>();
+            subscriberA.Setup(x => x.GetSubscribedEvents())
+                .Returns(new Dictionary<string, short>()
+                {
+                    {"anotherdummy", -5}
+                });
+            var subscriberB = new Mock<IEventSubscriber>();
+            subscriberB.Setup(x => x.GetSubscribedEvents())
+                .Returns(new Dictionary<string, short>()
+                {
+                    {"dummy", 0},
+                    {"anotherdummy", -5}
+                });
+
+            var subscribers = new List<IEventSubscriber>()
+            {
+                subscriberA.Object,
+                subscriberB.Object,
+            };
+
+            var container = new Mock<IContainer>();
+            container.Setup(x => x.GetAllInstances<IEventSubscriber>())
+                .Returns(subscribers);
+
+            var dispatcher = new EventDispatcher(container.Object);
+            dispatcher.Scan();
+
+            // When
+            var output = dispatcher.WhatDoIHave();
+
+            // Then
+            Assert.AreEqual(3, output.Count());
+            Assert.AreEqual(
+                "Castle.Proxies.IEventSubscriberProxy will subscribe to <anotherdummy> with priority <-5>",
+                output.ElementAt(0));
+            Assert.AreEqual(
+                "Castle.Proxies.IEventSubscriberProxy will subscribe to <dummy> with priority <0>",
+                output.ElementAt(1));
+            Assert.AreEqual(
+                "Castle.Proxies.IEventSubscriberProxy will subscribe to <anotherdummy> with priority <-5>",
+                output.ElementAt(2));
         }
     }
 }
