@@ -8,7 +8,8 @@
     <authors>Global Elements GmbH</authors>
     <license type="expression">Apache-2.0</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>An EventDispatcher component</summary>
+    <projectUrl>https://github.com/globalelements-gmbh/EventDispatcher</projectUrl>
+    <summary>An EventDispatcher component, based on subscriber principle and auto-scanning assemblies.</summary>
     <description>An EventDispatcher component</description>
     <releaseNotes>
       See GitHub: https://github.com/globalelements-gmbh/EventDispatcher/releases
@@ -34,7 +35,7 @@
           target="lib\netcoreapp3.0\Basenet.Framework.PropertyReader.dll"/>
     <file src=".\bin\Release\netcoreapp3.0\GlobalElements.EventDispatcher.xml"
           target="lib\netcoreapp3.0\Basenet.Framework.PropertyReader.xml"/>
-    
+
     <file src=".\bin\Release\netcoreapp3.1\GlobalElements.EventDispatcher.dll"
           target="lib\netcoreapp3.1\Basenet.Framework.PropertyReader.dll"/>
     <file src=".\bin\Release\netcoreapp3.1\GlobalElements.EventDispatcher.xml"
