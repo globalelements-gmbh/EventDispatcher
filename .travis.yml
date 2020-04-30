@@ -10,17 +10,15 @@ jobs:
       script:
         - dotnet restore
         - dotnet build
-    - stage: test
-      script:
         - dotnet test ./*Test*/*.csproj
     - stage: deploy
       script:
-        - dotnet pack -c Release -p:EventDispatcher.nuspec
+        - dotnet build -c Release
+        - dotnet pack ./GlobalElements.EventDispatcher/GlobalElements.EventDispatcher.csproj -c Release -p:NuspecFile=EventDispatcher.nuspec
         - dotnet nuget push bin\Release\*.nupkg
           
 stages:
   - compile
-  - test
   - name: deploy
     if: branch = master
 

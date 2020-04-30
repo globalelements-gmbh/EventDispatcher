@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>GlobalElements.EventDispatcher</id>
+    <version>0.1.0-alpha</version>
+    <title>EventDispatcher</title>
+    <authors>Global Elements GmbH</authors>
+    <license type="expression">Apache-2.0</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>An EventDispatcher component</summary>
+    <description>An EventDispatcher component</description>
+    <releaseNotes>
+      See GitHub: https://github.com/globalelements-gmbh/EventDispatcher/releases
+    </releaseNotes>
+    <copyright>Global Elements GmbH</copyright>
+    <dependencies>
+      <dependency id="StructureMap" version="4.7.0"/>
+      <dependency id="log4net" version="2.0.8"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src=".\bin\Release\netstandard2.0\GlobalElements.EventDispatcher.dll"
+          target="lib\netstandard2.0\Basenet.Framework.PropertyReader.dll"/>
+    <file src=".\bin\Release\netstandard2.0\GlobalElements.EventDispatcher.xml"
+          target="lib\netstandard2.0\Basenet.Framework.PropertyReader.xml"/>
+
+    <file src=".\bin\Release\netcoreapp2.2\GlobalElements.EventDispatcher.dll"
+          target="lib\netcoreapp2.2\Basenet.Framework.PropertyReader.dll"/>
+    <file src=".\bin\Release\netcoreapp2.2\GlobalElements.EventDispatcher.xml"
+          target="lib\netcoreapp2.2\Basenet.Framework.PropertyReader.xml"/>
+
+    <file src=".\bin\Release\netcoreapp3.0\GlobalElements.EventDispatcher.dll"
+          target="lib\netcoreapp3.0\Basenet.Framework.PropertyReader.dll"/>
+    <file src=".\bin\Release\netcoreapp3.0\GlobalElements.EventDispatcher.xml"
+          target="lib\netcoreapp3.0\Basenet.Framework.PropertyReader.xml"/>
+    
+    <file src=".\bin\Release\netcoreapp3.1\GlobalElements.EventDispatcher.dll"
+          target="lib\netcoreapp3.1\Basenet.Framework.PropertyReader.dll"/>
+    <file src=".\bin\Release\netcoreapp3.1\GlobalElements.EventDispatcher.xml"
+          target="lib\netcoreapp3.1\Basenet.Framework.PropertyReader.xml"/>
+
+  </files>
+</package>
