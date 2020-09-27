@@ -30,6 +30,5 @@
           target="lib\netcoreapp3.1\GlobalElements.EventDispatcher.dll"/>
     <file src=".\bin\Release\netcoreapp3.1\GlobalElements.EventDispatcher.xml"
           target="lib\netcoreapp3.1\GlobalElements.EventDispatcher.xml"/>
-
   </files>
 </package>
