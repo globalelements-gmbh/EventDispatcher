@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GlobalElements.EventDispatcherLib.Infrastructure.ServiceLocation;
 using GlobalElements.EventDispatcherLib.Services;
-using StructureMap;
+using Lamar;
+using ServiceRegistry = GlobalElements.EventDispatcherLib.Infrastructure.ServiceLocation.ServiceRegistry;
 
 namespace GlobalElements.EventDispatcherLib.Test.Area.Infrastructure
 {
@@ -26,7 +26,7 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Infrastructure
                         x.TheCallingAssembly();
                         x.AddAllTypesOf<IEventSubscriber>().NameBy(i => i.Name);
                     });
-                    p.AddRegistry<ServiceRegistry>();
+                    p.IncludeRegistry<ServiceRegistry>();
                 });
         }
 
@@ -45,18 +45,6 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Infrastructure
         {
             var result = _container.GetInstance<T>();
             return result;
-        }
-
-        public ServiceLocator RegisterInstance<TPlugin>(TPlugin instance)
-        {
-            _container.Configure(c => c.For<TPlugin>().Use(() => instance));
-            return this;
-        }
-
-        public ServiceLocator RegisterType<TPlugin, TConcreteType>() where TConcreteType : TPlugin
-        {
-            _container.Configure(c => c.For<TPlugin>().Use<TConcreteType>());
-            return this;
         }
 
         public IContainer GetContainer()

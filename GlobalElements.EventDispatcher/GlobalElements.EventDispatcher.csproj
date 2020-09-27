@@ -3,7 +3,7 @@
     <PropertyGroup>
         <LangVersion>8</LangVersion>
         <RootNamespace>GlobalElements.EventDispatcherLib</RootNamespace>
-        <TargetFrameworks>netstandard2.0;netcoreapp3.0;netcoreapp2.2;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -15,8 +15,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Lamar" Version="4.3.1" />
       <PackageReference Include="log4net" Version="2.0.8" />
-      <PackageReference Include="structuremap" Version="4.7.1" />
     </ItemGroup>
 
 </Project>

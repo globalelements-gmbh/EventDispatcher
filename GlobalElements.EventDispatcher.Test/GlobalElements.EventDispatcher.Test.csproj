@@ -4,14 +4,15 @@
         <LangVersion>8</LangVersion>
         <AssemblyName>GlobalElements.EventDispatcherLib.Test</AssemblyName>
         <RootNamespace>GlobalElements.EventDispatcherLib.Test</RootNamespace>
-        <TargetFrameworks>netstandard2.0;netcoreapp3.0;netcoreapp2.2;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
-      <PackageReference Include="Moq" Version="4.13.1" />
+      <PackageReference Include="Lamar" Version="4.3.1" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+      <PackageReference Include="Moq" Version="4.14.5" />
       <PackageReference Include="nunit" Version="3.12.0" />
-      <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+      <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
     </ItemGroup>
 
     <ItemGroup>

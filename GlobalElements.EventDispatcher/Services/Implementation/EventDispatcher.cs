@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using GlobalElements.EventDispatcherLib.Exception;
 using GlobalElements.EventDispatcherLib.Model;
+using Lamar;
 using log4net;
-using StructureMap;
 
 namespace GlobalElements.EventDispatcherLib.Services.Implementation
 {

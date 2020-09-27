@@ -7,9 +7,9 @@ using GlobalElements.EventDispatcherLib.Services.Implementation;
 using GlobalElements.EventDispatcherLib.Test.Area.Infrastructure;
 using GlobalElements.EventDispatcherLib.Test.Area.Listeners;
 using GlobalElements.EventDispatcherLib.Test.Infrastructure.Events;
+using Lamar;
 using Moq;
 using NUnit.Framework;
-using StructureMap;
 
 namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
 {
