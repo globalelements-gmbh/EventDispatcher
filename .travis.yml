@@ -24,7 +24,7 @@ jobs:
 stages:
   - compile
   - name: deploy
-    if: branch = master
+    if: (tag =~ ^v)
 
 global:
   - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
