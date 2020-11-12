@@ -26,20 +26,9 @@
     <file src=".\bin\Release\netstandard2.0\GlobalElements.EventDispatcher.xml"
           target="lib\netstandard2.0\GlobalElements.EventDispatcher.xml"/>
 
-    <file src=".\bin\Release\netcoreapp2.2\GlobalElements.EventDispatcher.dll"
-          target="lib\netcoreapp2.2\GlobalElements.EventDispatcher.dll"/>
-    <file src=".\bin\Release\netcoreapp2.2\GlobalElements.EventDispatcher.xml"
-          target="lib\netcoreapp2.2\GlobalElements.EventDispatcher.xml"/>
-
-    <file src=".\bin\Release\netcoreapp3.0\GlobalElements.EventDispatcher.dll"
-          target="lib\netcoreapp3.0\GlobalElements.EventDispatcher.dll"/>
-    <file src=".\bin\Release\netcoreapp3.0\GlobalElements.EventDispatcher.xml"
-          target="lib\netcoreapp3.0\GlobalElements.EventDispatcher.xml"/>
-
     <file src=".\bin\Release\netcoreapp3.1\GlobalElements.EventDispatcher.dll"
           target="lib\netcoreapp3.1\GlobalElements.EventDispatcher.dll"/>
     <file src=".\bin\Release\netcoreapp3.1\GlobalElements.EventDispatcher.xml"
           target="lib\netcoreapp3.1\GlobalElements.EventDispatcher.xml"/>
-
   </files>
 </package>
