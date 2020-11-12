@@ -80,14 +80,14 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
                 }
                 catch (PassThroughException exception)
                 {
-                    Logger.Error($"Exception when dispatching event <{exception.GetType()}> <{exception.Message}>");
+                    Logger.Error($"Exception when dispatching event <{exception.GetType()}> <{exception.Message}>", exception);
                     Logger.Info("Passing through exception");
 
                     throw;
                 }
                 catch (System.Exception exception)
                 {
-                    Logger.Error($"Exception when dispatching event <{exception.GetType()}> <{exception.Message}>");
+                    Logger.Error($"Exception when dispatching event <{exception.GetType()}> <{exception.Message}>", exception);
                 }
             });
 
