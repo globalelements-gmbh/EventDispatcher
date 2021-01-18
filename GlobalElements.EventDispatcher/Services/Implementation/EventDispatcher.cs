@@ -14,11 +14,21 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
         private readonly List<IEventListener> _listeners = new List<IEventListener>();
         private readonly IContainer _container;
 
+        /// <summary>
+        /// Whether the event dispatcher did already scan the container
+        /// </summary>
+        private bool _hasScanned;
+
+        /// <summary>
+        /// Initialize a new event dispatcher
+        /// </summary>
+        /// <param name="container">The container to scan for listeners</param>
         public EventDispatcher(IContainer container)
         {
             _container = container;
         }
 
+        /// <inheritdoc />
         public void Scan()
         {
             Logger.Debug("Finding all event subscribers...");
@@ -29,13 +39,18 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
                     Logger.Debug($"Adding listener <{s.GetType().Name}>");
                     _listeners.Add(s);
                 });
+
+            // set hasScanned to true so that the scanner is not run implicit again
+            _hasScanned = true;
         }
 
+        /// <inheritdoc />
         public IReadOnlyCollection<IEventListener> GetListeners()
         {
             return _listeners.AsReadOnly();
         }
 
+        /// <inheritdoc />
         public void AddListener(string eventName, IEventListener listener)
         {
             _listeners.Add(listener);
@@ -61,8 +76,15 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
             return list;
         }
 
+        /// <inheritdoc />
         public T Dispatch<T>(T theEvent) where T : IEvent
         {
+            if (!_hasScanned)
+            {
+                Logger.Debug("Perform scan as scanner was not already run");
+                Scan();
+            }
+
             Logger.Debug($"Dispatch event of type <{theEvent.GetType().Name}>: <{theEvent.EventName}>");
             var subscribers = GetSubscribers(theEvent.EventName);
             subscribers.ForEach(l =>
