@@ -1,6 +1,8 @@
 # Event Dispatcher
 
-[![Build Status](https://api.travis-ci.org/globalelements-gmbh/EventDispatcher.svg?branch=master "Build status")](https://travis-ci.org/github/globalelements-gmbh/EventDispatcher)
+[![Build Status](https://teamcity-public.globalelements.ch/app/rest/builds/buildType:(id:EventDispatcher_BuildAndTest)/statusIcon.svg)](https://teamcity-public.globalelements.ch/buildConfiguration/EventDispatcher_BuildAndTest)
+[![NuGet Version](https://img.shields.io/nuget/v/GlobalElements.EventDispatcher)](https://www.nuget.org/packages/GlobalElements.EventDispatcher)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/GlobalElements.EventDispatcher)](https://www.nuget.org/packages/GlobalElements.EventDispatcher)
 
 ## What is this package?
 
@@ -8,19 +10,25 @@ This package is an event dispatcher. It allows to subscribe to events using Stru
 
 ```c#
 // instantiate the event dispatcher and scan the assembly
-var eventDispatcher = new EventDispatcher(new StructureMap.Container());
-eventDispatcher.Scan();
+var eventDispatcher = new EventDispatcher(new Lamar.IContainer());
+eventDispatcher.Scan(); // scanning is optional and happens on first call to .Dispatch()
 
 // some event class
 class Event : IEvent {}
 
+// some event listener or subscriber
+//  IEventListener      -> must be added manually to the dispatcher using .AddListener()
+//  IEventSubscriber    -> is added automatically to the dispatcher when .Scan() is called
+class EventListener : IEventListener { }
+class EventSubscriber : IEventSubscriber { }
+
 // dispatch the event
-var eventObj = eventDispatcher.Dispatch(new Event)
+var eventObj = eventDispatcher.Dispatch(new Event())
 ```
 
 ## License
 
-Copyright 2020 Global Elements GmbH
+Copyright 2020-2021 Global Elements GmbH
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
