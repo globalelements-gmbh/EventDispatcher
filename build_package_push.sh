@@ -13,10 +13,14 @@ if [[ -z "${NUGET_API_KEY}" ]]; then
   echo "Set NUGET_API_KEY environment variable for the api key used to publish to the Nuget gallery"
   exit 1
 fi
+if [[ -z "${NUGET_VERSION}" ]]; then
+  echo "Set NUGET_VERSION environment variable for the desired release version"
+  exit 1
+fi
 
 # Build, package and push the NuGet
 dotnet clean
 rm -f ./GlobalElements.EventDispatcher/bin/Release/GlobalElements.EventDispatcher*.nupkg
 dotnet build -c Release
-dotnet pack ./GlobalElements.EventDispatcher/GlobalElements.EventDispatcher.csproj -c Release -p:NuspecFile=EventDispatcher.nuspec
+dotnet pack ./GlobalElements.EventDispatcher/GlobalElements.EventDispatcher.csproj -c Release -p:NuspecFile=EventDispatcher.nuspec;version=$NUGET_VERSION
 dotnet nuget push ./GlobalElements.EventDispatcher/bin/Release/GlobalElements.EventDispatcher*.nupkg -s https://www.nuget.org -k ${NUGET_API_KEY}
