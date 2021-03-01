@@ -2,7 +2,7 @@
 
 # v2
 
-## v2.0.0 - (currently RC4)
+## v2.0.0 - 2021-03-01
 
 ### Improvements
 
