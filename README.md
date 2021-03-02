@@ -3,6 +3,7 @@
 [![Build Status](https://teamcity-public.globalelements.ch/app/rest/builds/buildType:(id:EventDispatcher_BuildAndTest)/statusIcon.svg)](https://teamcity-public.globalelements.ch/buildConfiguration/EventDispatcher_BuildAndTest)
 [![NuGet Version](https://img.shields.io/nuget/v/GlobalElements.EventDispatcher)](https://www.nuget.org/packages/GlobalElements.EventDispatcher)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/GlobalElements.EventDispatcher)](https://www.nuget.org/packages/GlobalElements.EventDispatcher)
+[![License](https://img.shields.io/github/license/globalelements-gmbh/EventDispatcher)](https://github.com/globalelements-gmbh/EventDispatcher/blob/master/LICENSE)
 
 ## What is this package?
 
