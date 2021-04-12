@@ -64,6 +64,60 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
         }
 
         [Test]
+        public void Dispatch_WithSubscriber_DifferentPriority_WillSortProperly()
+        {
+            // Given
+            var subscribedEventsSequence = new MockSequence();
+
+            var subscriber1 = new Mock<IEventSubscriber>();
+            subscriber1
+                .InSequence(subscribedEventsSequence)
+                .Setup(x => x.GetSubscribedEvents())
+                .Returns(new Dictionary<string, short>()
+                {
+                    {"dummy", EventPriority.Max}
+                });
+
+            var subscriber2 = new Mock<IEventSubscriber>();
+            subscriber2.InSequence(subscribedEventsSequence)
+                .Setup(x => x.GetSubscribedEvents())
+                .Returns(new Dictionary<string, short>()
+                {
+                    {"dummy", 0}
+                });
+
+            var subscriber3 = new Mock<IEventSubscriber>();
+            subscriber3.InSequence(subscribedEventsSequence)
+                .Setup(x => x.GetSubscribedEvents())
+                .Returns(new Dictionary<string, short>()
+                {
+                    {"dummy", EventPriority.Min}
+                });
+
+            var subscribers = new List<IEventSubscriber>()
+            {
+                subscriber1.Object,
+                subscriber2.Object,
+                subscriber3.Object,
+            };
+
+            var container = new Mock<IContainer>();
+            container.Setup(x => x.GetAllInstances<IEventSubscriber>())
+                .Returns(subscribers);
+
+            var dispatcher = new EventDispatcher(container.Object);
+
+            // When
+            dispatcher.Scan();
+            dispatcher.Dispatch(new DummyEvent());
+
+            // Then
+            subscriber1.Verify(x => x.OnEvent(It.IsAny<DummyEvent>()), Times.Once);
+            subscriber2.Verify(x => x.OnEvent(It.IsAny<DummyEvent>()), Times.Once);
+            subscriber3.Verify(x => x.OnEvent(It.IsAny<DummyEvent>()), Times.Once);
+        }
+
+        [Test]
         public void Dispatch_WithSubscriber_ThrowsException_WillContinueToDispatch()
         {
             // Given
@@ -114,6 +168,46 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
                     {"dummy", 0}
                 });
             var subscriberB = new Mock<IEventSubscriber>();
+            subscriberB.Setup(x => x.GetSubscribedEvents())
+                .Returns(new Dictionary<string, short>()
+                {
+                    {"dummy", EventPriority.Max}
+                });
+            subscriberB.Setup(x => x.OnEvent(It.IsAny<IEvent>()))
+                .Throws<PassThroughException>();
+
+            var subscribers = new List<IEventSubscriber>()
+            {
+                subscriberA.Object,
+                subscriberB.Object
+            };
+
+            var container = new Mock<IContainer>();
+            container.Setup(x => x.GetAllInstances<IEventSubscriber>())
+                .Returns(subscribers);
+
+            var dispatcher = new EventDispatcher(container.Object);
+
+            // When
+            dispatcher.Scan();
+            Assert.Throws<PassThroughException>(() => dispatcher.Dispatch(new DummyEvent()));
+
+            // Then
+            subscriberA.Verify(x => x.OnEvent(It.IsAny<DummyEvent>()), Times.Never);
+            subscriberB.Verify(x => x.OnEvent(It.IsAny<DummyEvent>()), Times.Once);
+        }
+
+        [Test, Description("If the subscriber is a IFailHardSubscriber, then execution is aborted")]
+        public void Dispatch_WithSubscriber_IsFailHardSubscriber_WillAbortExection()
+        {
+            // Given
+            var subscriberA = new Mock<IEventSubscriber>();
+            subscriberA.Setup(x => x.GetSubscribedEvents())
+                .Returns(new Dictionary<string, short>()
+                {
+                    {"dummy", 0}
+                });
+            var subscriberB = new Mock<IFailHardSubscriber>();
             subscriberB.Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {

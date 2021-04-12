@@ -101,14 +101,20 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
                 }
                 catch (PassThroughException exception)
                 {
-                    Log.Error($"Exception when dispatching event <{exception.GetType()}> <{exception.Message}>", exception);
+                    Log.Error(exception, "Exception when dispatching event {Message}", exception.Message);
                     Log.Information("Passing through exception");
 
                     throw;
                 }
                 catch (System.Exception exception)
                 {
-                    Log.Error($"Exception when dispatching event <{exception.GetType()}> <{exception.Message}>", exception);
+                    Log.Error(exception, "Exception when dispatching event {Message}", exception.Message);
+
+                    if (l is IFailHardSubscriber)
+                    {
+                        // re-throw exception to parent
+                        throw;
+                    }
                 }
             });
 
@@ -122,9 +128,11 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
             Log.Debug($"Evaluate listeners for <{eventName}>");
             _listeners.ForEach(l =>
             {
-                if (l.GetSubscribedEvents().ContainsKey(eventName))
+                var subscribedEvents = l.GetSubscribedEvents();
+
+                if (subscribedEvents.ContainsKey(eventName))
                 {
-                    var priority = l.GetSubscribedEvents()[eventName];
+                    var priority = subscribedEvents[eventName];
                     Log.Debug($"Select listener <{l.GetType().Name}> priority <{priority}>");
                     selectedListeners.Add(l, priority);
                 }
