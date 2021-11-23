@@ -3,7 +3,7 @@
     <PropertyGroup>
         <LangVersion>8</LangVersion>
         <RootNamespace>GlobalElements.EventDispatcherLib</RootNamespace>
-        <TargetFrameworks>netstandard2.0;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -15,8 +15,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Lamar" Version="5.0.0" />
-      <PackageReference Include="log4net" Version="2.0.8" />
+      <PackageReference Include="Lamar" Version="4.3.1" />
+      <PackageReference Include="Serilog" Version="2.10.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="EventDispatcher.nuspec">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

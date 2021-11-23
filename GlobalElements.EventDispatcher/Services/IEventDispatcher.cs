@@ -40,5 +40,11 @@ namespace GlobalElements.EventDispatcherLib.Services
         /// </summary>
         /// <returns>A list with all subscribers and their events</returns>
         IEnumerable<string> WhatDoIHave();
+
+        /// <summary>
+        /// Retrieve the available listeners as read only collection
+        /// </summary>
+        /// <returns>The list of listeners available</returns>
+        IReadOnlyCollection<IEventListener> GetListeners();
     }
 }
