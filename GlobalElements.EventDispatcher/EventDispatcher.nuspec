@@ -19,7 +19,7 @@
     <copyright>Global Elements GmbH</copyright>
     <dependencies>
       <dependency id="Lamar" version="5.0.0"/>
-      <dependency id="log4net" version="2.0.8"/>
+      <dependency id="Serilog" version="2.8.0"/>
     </dependencies>
   </metadata>
   <files>

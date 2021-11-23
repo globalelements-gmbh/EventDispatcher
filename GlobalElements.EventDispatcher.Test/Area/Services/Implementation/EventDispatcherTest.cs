@@ -75,7 +75,7 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
                 .Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {
-                    {"dummy", EventPriority.Max}
+                    { "dummy", EventPriority.Max }
                 });
 
             var subscriber2 = new Mock<IEventSubscriber>();
@@ -83,7 +83,7 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
                 .Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {
-                    {"dummy", 0}
+                    { "dummy", 0 }
                 });
 
             var subscriber3 = new Mock<IEventSubscriber>();
@@ -91,7 +91,7 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
                 .Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {
-                    {"dummy", EventPriority.Min}
+                    { "dummy", EventPriority.Min }
                 });
 
             var subscribers = new List<IEventSubscriber>()
@@ -118,7 +118,7 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
         }
 
         [Test]
-        public void Dispatch_WithSubscriber_ThrowsException_WillContinueToDispatch()
+        public void Dispatch_WithSubscriber_ThrowsException_WillStopDispatching()
         {
             // Given
             var subscriberA = new Mock<IEventSubscriber>();
@@ -172,46 +172,6 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
                 .Returns(new Dictionary<string, short>()
                 {
                     { "dummy", EventPriority.Max }
-                });
-            subscriberB.Setup(x => x.OnEvent(It.IsAny<IEvent>()))
-                .Throws<PassThroughException>();
-
-            var subscribers = new List<IEventSubscriber>()
-            {
-                subscriberA.Object,
-                subscriberB.Object
-            };
-
-            var container = new Mock<IContainer>();
-            container.Setup(x => x.GetAllInstances<IEventSubscriber>())
-                .Returns(subscribers);
-
-            var dispatcher = new EventDispatcher(container.Object);
-
-            // When
-            dispatcher.Scan();
-            Assert.Throws<PassThroughException>(() => dispatcher.Dispatch(new DummyEvent()));
-
-            // Then
-            subscriberA.Verify(x => x.OnEvent(It.IsAny<DummyEvent>()), Times.Never);
-            subscriberB.Verify(x => x.OnEvent(It.IsAny<DummyEvent>()), Times.Once);
-        }
-
-        [Test, Description("If the subscriber is a IFailHardSubscriber, then execution is aborted")]
-        public void Dispatch_WithSubscriber_IsFailHardSubscriber_WillAbortExection()
-        {
-            // Given
-            var subscriberA = new Mock<IEventSubscriber>();
-            subscriberA.Setup(x => x.GetSubscribedEvents())
-                .Returns(new Dictionary<string, short>()
-                {
-                    {"dummy", 0}
-                });
-            var subscriberB = new Mock<IFailHardSubscriber>();
-            subscriberB.Setup(x => x.GetSubscribedEvents())
-                .Returns(new Dictionary<string, short>()
-                {
-                    {"dummy", EventPriority.Max}
                 });
             subscriberB.Setup(x => x.OnEvent(It.IsAny<IEvent>()))
                 .Throws<PassThroughException>();
