@@ -4,12 +4,13 @@ using System.Linq;
 using GlobalElements.EventDispatcherLib.Exception;
 using GlobalElements.EventDispatcherLib.Model;
 using Lamar;
-using Serilog;
+using log4net;
 
 namespace GlobalElements.EventDispatcherLib.Services.Implementation
 {
     public class EventDispatcher : IEventDispatcher
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(EventDispatcher));
         private readonly List<IEventListener> _listeners = new List<IEventListener>();
         private readonly IContainer _container;
 
@@ -30,12 +31,12 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
         /// <inheritdoc />
         public void Scan()
         {
-            Log.Debug("Finding all event subscribers...");
+            Logger.Debug("Finding all event subscribers...");
             _container.GetAllInstances<IEventSubscriber>()
                 .ToList()
                 .ForEach(s =>
                 {
-                    Log.Debug($"Adding listener <{s.GetType().Name}>");
+                    Logger.Debug($"Adding listener <{s.GetType().Name}>");
                     _listeners.Add(s);
                 });
 
@@ -80,23 +81,23 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
         {
             if (!_hasScanned)
             {
-                Log.Debug("Perform scan as scanner was not already run");
+                Logger.Debug("Perform scan as scanner was not already run");
                 Scan();
             }
 
-            Log.Debug($"Dispatch event of type <{theEvent.GetType().Name}>: <{theEvent.EventName}>");
+            Logger.Debug($"Dispatch event of type <{theEvent.GetType().Name}>: <{theEvent.EventName}>");
             var subscribers = GetSubscribers(theEvent.EventName);
             subscribers.ForEach(l =>
             {
                 if (theEvent.IsPropagationStopped)
                 {
-                    Log.Debug($"Omit dispatch (propagation stopped>: <{l.GetType().Name}>");
+                    Logger.Debug($"Omit dispatch (propagation stopped>: <{l.GetType().Name}>");
                     return;
                 }
 
                 try
                 {
-                    Log.Debug($"Dispatch to listener <{l.GetType().Name}>");
+                    Logger.Debug($"Dispatch to listener <{l.GetType().Name}>");
                     l.OnEvent(theEvent);
                 }
                 catch (PassThroughException exception)
@@ -125,7 +126,7 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
         {
             var selectedListeners = new Dictionary<IEventListener, int>();
 
-            Log.Debug($"Evaluate listeners for <{eventName}>");
+            Logger.Debug($"Evaluate listeners for <{eventName}>");
             _listeners.ForEach(l =>
             {
                 var subscribedEvents = l.GetSubscribedEvents();
@@ -133,7 +134,7 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
                 if (subscribedEvents.ContainsKey(eventName))
                 {
                     var priority = subscribedEvents[eventName];
-                    Log.Debug($"Select listener <{l.GetType().Name}> priority <{priority}>");
+                    Logger.Debug($"Select listener <{l.GetType().Name}> priority <{priority}>");
                     selectedListeners.Add(l, priority);
                 }
             });
