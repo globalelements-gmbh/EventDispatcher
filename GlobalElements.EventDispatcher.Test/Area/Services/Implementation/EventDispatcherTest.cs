@@ -41,7 +41,7 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
             subscriber.Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {
-                    {"dummy", 0}
+                    { "dummy", 0 }
                 });
 
             var subscribers = new List<IEventSubscriber>()
@@ -125,13 +125,13 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
             subscriberA.Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {
-                    {"dummy", 0}
+                    { "dummy", 0 }
                 });
             var subscriberB = new Mock<IEventSubscriber>();
             subscriberB.Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {
-                    {"dummy", EventPriority.Max}
+                    { "dummy", EventPriority.Max }
                 });
             subscriberB.Setup(x => x.OnEvent(It.IsAny<IEvent>()))
                 .Throws<System.Exception>();
@@ -150,10 +150,10 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
 
             // When
             dispatcher.Scan();
-            dispatcher.Dispatch(new DummyEvent());
+            Assert.Throws<System.Exception>(() => dispatcher.Dispatch(new DummyEvent()));
 
             // Then
-            subscriberA.Verify(x => x.OnEvent(It.IsAny<DummyEvent>()), Times.Once);
+            subscriberA.Verify(x => x.OnEvent(It.IsAny<DummyEvent>()), Times.Never);
             subscriberB.Verify(x => x.OnEvent(It.IsAny<DummyEvent>()), Times.Once);
         }
 
@@ -165,13 +165,13 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
             subscriberA.Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {
-                    {"dummy", 0}
+                    { "dummy", 0 }
                 });
             var subscriberB = new Mock<IEventSubscriber>();
             subscriberB.Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {
-                    {"dummy", EventPriority.Max}
+                    { "dummy", EventPriority.Max }
                 });
             subscriberB.Setup(x => x.OnEvent(It.IsAny<IEvent>()))
                 .Throws<PassThroughException>();
@@ -244,7 +244,7 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
             subscriberA.Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {
-                    {"dummy", 0}
+                    { "dummy", 0 }
                 });
 
             var subscribers = new List<IEventSubscriber>()
@@ -276,8 +276,8 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
             subscriberA.Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {
-                    {"dummy", 0},
-                    {"anotherdummy", -5}
+                    { "dummy", 0 },
+                    { "anotherdummy", -5 }
                 });
 
             var subscribers = new List<IEventSubscriber>()
@@ -312,14 +312,14 @@ namespace GlobalElements.EventDispatcherLib.Test.Area.Services.Implementation
             subscriberA.Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {
-                    {"anotherdummy", -5}
+                    { "anotherdummy", -5 }
                 });
             var subscriberB = new Mock<IEventSubscriber>();
             subscriberB.Setup(x => x.GetSubscribedEvents())
                 .Returns(new Dictionary<string, short>()
                 {
-                    {"dummy", 0},
-                    {"anotherdummy", -5}
+                    { "dummy", 0 },
+                    { "anotherdummy", -5 }
                 });
 
             var subscribers = new List<IEventSubscriber>()

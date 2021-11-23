@@ -101,18 +101,18 @@ namespace GlobalElements.EventDispatcherLib.Services.Implementation
                 }
                 catch (PassThroughException exception)
                 {
-                    Log.Error(exception, "Exception when dispatching event {Message}", exception.Message);
-                    Log.Information("Passing through exception");
+                    Logger.Error($"Exception when dispatching event <{exception.GetType()}> <{exception.Message}>", exception);
+                    Logger.Debug("Passing through exception, because thrown exception was of type PassThroughException");
 
                     throw;
                 }
                 catch (System.Exception exception)
                 {
-                    Log.Error(exception, "Exception when dispatching event {Message}", exception.Message);
+                    Logger.Error($"Exception when dispatching event <{exception.GetType()}> <{exception.Message}>", exception);
 
-                    if (l is IFailHardSubscriber)
+                    if (!(l is ISilentEventListener))
                     {
-                        // re-throw exception to parent
+                        Logger.Debug("Listener does not implement <ISilentEventListener>, therefore passing through exception");
                         throw;
                     }
                 }
